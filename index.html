@@ -7,18 +7,123 @@
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div class="book">
-    <h1>Klo Gästebuch</h1>
-    <div id="entries" class="page"></div>
-    <div class="nav">
-        <button onclick="prevPage()">←</button>
-        <button onclick="nextPage()">→</button>
-    </div>
-    <div class="actions">
-        <a href="create.html"><button>Neuer Eintrag</button></a>
-        <a href="admin.html"><button>Admin</button></a>
-    </div>
+<div class="app">
+  <header class="hero">
+    <h1>Gästebuch</h1>
+    <p class="subtitle">Erinnerungen, Bilder und kleine Kapitel</p>
+  </header>
+
+  <div class="tabs">
+    <button class="tab active" data-view="read">Lesen</button>
+    <button class="tab" data-view="write">Schreiben</button>
+  </div>
+
+  <main>
+    <section class="view active" id="view-read">
+      <div class="reader">
+        <div class="reader-topbar">
+          <div>Einträge: <span id="entryCount">0</span></div>
+          <div id="pageNumber">Seite 0 / 0</div>
+        </div>
+
+        <div id="emptyState">Noch keine Einträge vorhanden.</div>
+
+        <article id="entryView" class="hidden">
+          <div id="entryMood"></div>
+          <h2 id="entryTitle"></h2>
+
+          <div class="meta-line">
+            <span id="entryAuthor"></span>
+            <span id="entryDate"></span>
+          </div>
+
+          <img id="entryImage" class="hidden" alt="Bild zum Eintrag">
+          <p id="entryText"></p>
+          <dl id="entryFacts"></dl>
+        </article>
+
+        <div class="controls">
+          <button id="prevButton" type="button">← Zurück</button>
+          <button id="nextButton" type="button">Weiter →</button>
+          <button id="deleteButton" type="button">Eintrag löschen</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="view-write">
+      <form id="entryForm">
+        <div class="form-grid">
+          <label>
+            Name
+            <input type="text" name="author" placeholder="Dein Name">
+          </label>
+
+          <label>
+            Titel
+            <input type="text" name="title" placeholder="Titel des Eintrags">
+          </label>
+
+          <label>
+            Stimmung
+            <input type="text" name="mood" placeholder="z. B. 😊">
+          </label>
+
+          <label>
+            Klo-Rating
+            <input type="text" name="rating" placeholder="z. B. 10/10">
+          </label>
+
+          <label>
+            Besuchstyp
+            <input type="text" name="visitType" placeholder="z. B. Familie, Freunde">
+          </label>
+
+          <label>
+            Ort
+            <input type="text" name="locationNote" placeholder="Ort">
+          </label>
+
+          <label>
+            Zitat
+            <input type="text" name="quote" placeholder="Lieblingszitat">
+          </label>
+
+          <label>
+            Song
+            <input type="text" name="song" placeholder="Welcher Song passt dazu?">
+          </label>
+        </div>
+
+        <label>
+          Nachricht
+          <textarea name="message" placeholder="Schreib hier deinen Eintrag..."></textarea>
+        </label>
+
+        <label>
+          Bild
+          <input type="file" name="photo" accept="image/*">
+        </label>
+
+        <button type="submit">Eintrag speichern</button>
+        <p id="formStatus"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer>Mit Liebe gemacht ✨</footer>
 </div>
+
+<dialog id="passwordDialog">
+  <div class="dialog-content">
+    <h3>Löschen bestätigen</h3>
+    <input type="password" id="adminPasswordInput" placeholder="Admin-Passwort">
+    <p id="deleteStatus"></p>
+    <div class="dialog-actions">
+      <button type="button" onclick="document.getElementById('passwordDialog').close()">Abbrechen</button>
+      <button id="confirmDeleteButton" type="button">Löschen</button>
+    </div>
+  </div>
+</dialog>
 <script type="module" src="js/app.js"></script>
 </body>
 </html>
