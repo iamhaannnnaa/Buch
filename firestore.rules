@@ -1,0 +1,12 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /entries/{entryId} {
+      allow read: if true;
+      allow create: if true;
+      // Für produktiv ersetzen: nur mit Auth oder Cloud Function löschen.
+      allow delete: if false;
+      allow update: if false;
+    }
+  }
+}

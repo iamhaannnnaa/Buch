@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Klo-Gästebuch</title>
+  <meta name="theme-color" content="#d8c3a5" />
+  <meta name="description" content="Mobiles NFC-Klo-Gästebuch mit Firebase." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">NFC · Mobile First · Gästebuch</p>
+        <h1>Das stille Buch</h1>
+        <p class="hero-copy">
+          Ein digitales Klo-Gästebuch. Per NFC-Tap direkt auf dem Handy öffnen, Einträge lesen,
+          durchblättern und neue Seiten hinterlassen.
+        </p>
+      </div>
+      <div class="hero-badge">Kapitel <span id="entryCount">0</span></div>
+    </header>
+
+    <nav class="tabbar" aria-label="Navigation">
+      <button class="tab active" data-view="read">Lesen</button>
+      <button class="tab" data-view="write">Schreiben</button>
+      <button class="tab" data-view="about">Info</button>
+    </nav>
+
+    <main>
+      <section class="view active" id="view-read">
+        <div class="book-stage">
+          <article class="book-card">
+            <div class="page-meta">
+              <span id="pageNumber">Seite 0 / 0</span>
+              <button class="ghost-btn" id="deleteButton">Löschen</button>
+            </div>
+
+            <div id="emptyState" class="empty-state hidden">
+              <h2>Noch keine Einträge</h2>
+              <p>Sei die erste Person, die eine Seite im Buch hinterlässt.</p>
+            </div>
+
+            <div id="entryView" class="entry-view hidden">
+              <p class="entry-kicker" id="entryMood"></p>
+              <h2 id="entryTitle">Titel</h2>
+              <div class="entry-author-row">
+                <span id="entryAuthor">Anonym</span>
+                <span id="entryDate">-</span>
+              </div>
+              <img id="entryImage" class="entry-image hidden" alt="Hochgeladenes Bild" />
+              <p id="entryText" class="entry-text"></p>
+              <dl class="entry-facts" id="entryFacts"></dl>
+            </div>
+
+            <div class="page-controls">
+              <button id="prevButton">Zurück</button>
+              <button id="nextButton">Weiter</button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="view-write">
+        <form id="entryForm" class="form-card">
+          <div class="form-row">
+            <label for="author">Name oder Spitzname</label>
+            <input id="author" name="author" maxlength="40" placeholder="z. B. Toilettenpoetin" />
+          </div>
+
+          <div class="form-row">
+            <label for="title">Titel des Eintrags</label>
+            <input id="title" name="title" maxlength="70" placeholder="Ein kurzer Buchtitel" required />
+          </div>
+
+          <div class="grid two">
+            <div class="form-row">
+              <label for="mood">Stimmung</label>
+              <select id="mood" name="mood">
+                <option value="Nachdenklich">Nachdenklich</option>
+                <option value="Lustig">Lustig</option>
+                <option value="Chaotisch">Chaotisch</option>
+                <option value="Romantisch">Romantisch</option>
+                <option value="Legendär">Legendär</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label for="rating">Klo-Rating</label>
+              <select id="rating" name="rating">
+                <option value="5/5">5/5</option>
+                <option value="4/5">4/5</option>
+                <option value="3/5">3/5</option>
+                <option value="2/5">2/5</option>
+                <option value="1/5">1/5</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid two">
+            <div class="form-row">
+              <label for="visitType">Besuchstyp</label>
+              <select id="visitType" name="visitType">
+                <option value="Kurzbesuch">Kurzbesuch</option>
+                <option value="Notfall">Notfall</option>
+                <option value="Routine">Routine</option>
+                <option value="Luxus-Sitzung">Luxus-Sitzung</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label for="locationNote">Ort / Kabine</label>
+              <input id="locationNote" name="locationNote" maxlength="40" placeholder="z. B. 2. Stock links" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label for="message">Dein Eintrag</label>
+            <textarea id="message" name="message" rows="6" maxlength="700" placeholder="Was soll in diesem Kapitel stehen?" required></textarea>
+          </div>
+
+          <div class="grid two">
+            <div class="form-row">
+              <label for="quote">Lieblingssatz / Zitat</label>
+              <input id="quote" name="quote" maxlength="120" placeholder="Optional" />
+            </div>
+            <div class="form-row">
+              <label for="song">Song des Moments</label>
+              <input id="song" name="song" maxlength="80" placeholder="Optional" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label for="photo">Bild hochladen</label>
+            <input id="photo" name="photo" type="file" accept="image/*" />
+            <small>Optional. Das Bild wird in Firebase Storage gespeichert.</small>
+          </div>
+
+          <button type="submit" class="primary-btn">Eintrag veröffentlichen</button>
+          <p id="formStatus" class="status-line"></p>
+        </form>
+      </section>
+
+      <section class="view" id="view-about">
+        <article class="info-card">
+          <h2>Wie es funktioniert</h2>
+          <ol>
+            <li>NFC-Tag enthält nur die URL der Website.</li>
+            <li>Die Website lädt Einträge aus Firebase Firestore.</li>
+            <li>Bilder werden in Firebase Storage gespeichert.</li>
+            <li>Löschen ist im MVP per Passwort <code>1234</code> geschützt.</li>
+          </ol>
+          <p>
+            Für die produktive Version sollte das Löschen nicht im Frontend mit einem sichtbaren Passwort,
+            sondern über Firebase Authentication und sichere Regeln oder eine Cloud Function abgesichert werden.
+          </p>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="passwordDialog">
+    <form method="dialog" class="dialog-card">
+      <h3>Eintrag löschen</h3>
+      <p>Admin-Passwort eingeben.</p>
+      <input id="adminPasswordInput" type="password" placeholder="Passwort" />
+      <div class="dialog-actions">
+        <button value="cancel">Abbrechen</button>
+        <button id="confirmDeleteButton" value="default">Löschen</button>
+      </div>
+      <p id="deleteStatus" class="status-line"></p>
+    </form>
+  </dialog>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
