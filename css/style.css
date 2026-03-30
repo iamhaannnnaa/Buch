@@ -1,0 +1,26 @@
+body {
+    font-family: sans-serif;
+    background: #f5efe6;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+.book {
+    background: #fffaf0;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+.page {
+    min-height: 200px;
+    padding: 10px;
+}
+button {
+    background: #d6b98c;
+    border: none;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    font-size: 16px;
+}
