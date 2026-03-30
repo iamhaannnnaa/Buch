@@ -1,11 +1,12 @@
 // Kopiere diese Datei zu firebase-config.js und trage deine Firebase-Daten ein.
 export const firebaseConfig = {
-  apiKey: "DEINE_API_KEY",
-  authDomain: "DEIN_PROJEKT.firebaseapp.com",
-  projectId: "DEIN_PROJEKT_ID",
-  storageBucket: "DEIN_PROJEKT.firebasestorage.app",
-  messagingSenderId: "DEINE_SENDER_ID",
-  appId: "DEINE_APP_ID"
+  apiKey: "DEINEAIzaSyBbyn1si6Rv7HUThs-lYjyGPPtWiOYcUIs",
+  authDomain: "gastebuchmalina.firebaseapp.com",
+  projectId: "gastebuchmalina",
+  storageBucket: "gastebuchmalina.firebasestorage.app",
+  messagingSenderId: "931410724521",
+  appId: "1:931410724521:web:d5027ed0b08ab325e98bb8",
+  measurementId: "G-8ERBJT22X1"
 };
 
 // Nur MVP. Für produktiv nicht im Frontend lassen.
